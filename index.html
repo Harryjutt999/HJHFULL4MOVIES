@@ -18,7 +18,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Hide scrollbars for the main body */
         }
 
         .container {
@@ -203,27 +202,10 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        #iframeContainer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background-color: #000; /* Black background to hide any flashes */
-        }
-
-        #full4moviesIframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
-    <div class="container" id="mainAppContainer">
+    <div class="container">
         <!-- Login Section -->
         <div id="loginSection">
             <div class="logo">HJHFull4Movies</div>
@@ -286,15 +268,10 @@
             
             <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 10px; padding: 20px; margin: 20px 0; color: #155724;">
                 <h3>Welcome to Premium Entertainment!</h3>
-                <p>Loading premium content...</p>
+                <p>Redirecting you to the premium content...</p>
                 <div class="loading"></div>
             </div>
         </div>
-    </div>
-
-    <!-- Iframe Container -->
-    <div id="iframeContainer">
-        <iframe id="full4moviesIframe" src=""></iframe>
     </div>
 
     <script>
@@ -311,16 +288,18 @@
             
             // Check credentials
             if (username === 'HJHTOOLS' && password === 'HJHTOOLS7676') {
-                // Hide main app container and show success section briefly
-                document.getElementById('mainAppContainer').style.display = 'none';
+                // Show success section
+                document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('successSection').style.display = 'block';
                 
-                // Load iframe after a short delay
+                // Redirect after 3 seconds
                 setTimeout(function() {
-                    document.getElementById('iframeContainer').style.display = 'block';
-                    document.getElementById('full4moviesIframe').src = 'https://full4moviies.com/';
-                    document.title = 'HJHFull4Movies'; // Set the title of the parent page
-                }, 2000); // 2 seconds delay to show success message
+                    window.location.href = 'https://full4moviies.com/';
+                    // Attempt to change the browser tab title after redirection
+                    setTimeout(function() {
+                        document.title = 'HJHFull4Movies';
+                    }, 1000); // Give it a little time after the main redirect
+                }, 3000);
             } else {
                 errorDiv.textContent = 'Invalid username or password. Please purchase access if you don\'t have credentials.';
                 errorDiv.classList.remove('hidden');
@@ -373,3 +352,4 @@
 </body>
 </html>
 
+    
