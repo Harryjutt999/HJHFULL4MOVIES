@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HJHFull4Movies - Premium Entertainment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Hide scrollbars for the main body */
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-info {
+            background: linear-gradient(45deg, #17a2b8, #6f42c1);
+            color: white;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
+        }
+
+        .payment-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .payment-details {
+            text-align: left;
+            margin: 15px 0;
+        }
+
+        .payment-details strong {
+            color: #333;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+            margin: 20px 0;
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .success {
+            color: #28a745;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 20px;
+                padding: 30px 25px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #iframeContainer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #000; /* Black background to hide any flashes */
+        }
+
+        #full4moviesIframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainAppContainer">
+        <!-- Login Section -->
+        <div id="loginSection">
+            <div class="logo">HJHFull4Movies</div>
+            <div class="subtitle">Premium Entertainment Access</div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div id="loginError" class="error hidden"></div>
+            </form>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                <p style="color: #666; margin-bottom: 15px;">Don't have access? Purchase now!</p>
+                <button id="showPurchase" class="btn btn-success">Purchase Access - 300 PKR</button>
+            </div>
+        </div>
+
+        <!-- Purchase Section -->
+        <div id="purchaseSection" class="payment-section">
+            <div class="logo">HJHFull4Movies</div>
+            <div class="subtitle">Purchase Premium Access</div>
+            
+            <div class="price">300 PKR</div>
+            
+            <div class="payment-info">
+                <h3 style="color: #333; margin-bottom: 15px;">Payment Methods</h3>
+                
+                <div class="payment-details">
+                    <strong>JazzCash & EasyPaisa:</strong><br>
+                    Account Number: <strong>03266571331</strong><br>
+                    Account Holder: <strong>Ameer Hamza</strong>
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; padding: 15px; margin: 20px 0;">
+                <strong>Instructions:</strong><br>
+                1. Send 300 PKR to the above number<br>
+                2. Take a screenshot of payment<br>
+                3. Click "Send Screenshot" button below<br>
+                4. You'll receive login credentials via WhatsApp
+            </div>
+            
+            <button id="sendScreenshot" class="btn btn-info">Send Payment Screenshot</button>
+            <button id="backToLogin" class="btn" style="background: #6c757d; color: white;">Back to Login</button>
+        </div>
+
+        <!-- Success Section -->
+        <div id="successSection" class="payment-section">
+            <div class="logo">HJHFull4Movies</div>
+            <div class="subtitle">Access Granted!</div>
+            
+            <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 10px; padding: 20px; margin: 20px 0; color: #155724;">
+                <h3>Welcome to Premium Entertainment!</h3>
+                <p>Loading premium content...</p>
+                <div class="loading"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Iframe Container -->
+    <div id="iframeContainer">
+        <iframe id="full4moviesIframe" src=""></iframe>
+    </div>
+
+    <script>
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            // Clear previous errors
+            errorDiv.classList.add('hidden');
+            
+            // Check credentials
+            if (username === 'HJHTOOLS' && password === 'HJHTOOLS7676') {
+                // Hide main app container and show success section briefly
+                document.getElementById('mainAppContainer').style.display = 'none';
+                document.getElementById('successSection').style.display = 'block';
+                
+                // Load iframe after a short delay
+                setTimeout(function() {
+                    document.getElementById('iframeContainer').style.display = 'block';
+                    document.getElementById('full4moviesIframe').src = 'https://full4moviies.com/';
+                    document.title = 'HJHFull4Movies'; // Set the title of the parent page
+                }, 2000); // 2 seconds delay to show success message
+            } else {
+                errorDiv.textContent = 'Invalid username or password. Please purchase access if you don\'t have credentials.';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Show purchase section
+        document.getElementById('showPurchase').addEventListener('click', function() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('purchaseSection').style.display = 'block';
+        });
+
+        // Back to login
+        document.getElementById('backToLogin').addEventListener('click', function() {
+            document.getElementById('purchaseSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+        // Send screenshot to WhatsApp
+        document.getElementById('sendScreenshot').addEventListener('click', function() {
+            const whatsappNumber = '923266571331';
+            const message = 'Hi! I have made the payment of 300 PKR for HJHFull4Movies premium access. Please find the payment screenshot attached. Kindly provide me with the login credentials. Thank you!';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add typing effect for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.style.borderColor = '#28a745';
+                } else {
+                    this.style.borderColor = '#e1e5e9';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
